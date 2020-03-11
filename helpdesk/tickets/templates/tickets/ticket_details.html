@@ -17,7 +17,7 @@
                           <hr>
                           <div class="subject">
                               <strong>Ticket Id : #{{ messages.0.ticket.id }}</strong> <br>
-                              <small>Created by : {{ messages.0.ticket.created_by }}</small><br>
+                              <small>Created by : {{ created_by.get_full_name }}</small><br>
                               <small>Created on {{ messages.0.ticket.created_on.date }} at {{ messages.0.ticket.created_on.time }}</small>
                               <br><hr>
                               <strong>Subject:</strong>
@@ -48,7 +48,7 @@
                                     <span class="text-muted float-right">
                                         <small class="text-muted">{{ msg.published_at }}</small>
                                     </span>
-                                    <strong class="text-success">@{{ msg.ticket.created_by }}</strong>
+                                    <strong class="text-success">{{ created_by.get_full_name }}</strong>
                                     <p>
                                        {{ msg.message }}
                                     </p>
@@ -63,7 +63,7 @@
                                     <span class="text-muted float-right">
                                         <small class="text-muted">{{ msg.published_at }}</small>
                                     </span>
-                                    <strong class="text-success">@{{ msg.ticket.accepted_by }}</strong>
+                                    <strong class="text-success">{{ accepted_by.get_full_name }}</strong>
                                     <p>
                                        {{ msg.message }}
                                     </p>
@@ -76,7 +76,7 @@
                             {% if messages.0.ticket.accepted_by == request.user.email %}
                             <form method="POST">
                             {% csrf_token %}
-                             <textarea class="form-control" placeholder="write a message ..." rows="3"></textarea>
+                             <textarea class="form-control" name='message' placeholder="write a message ..." rows="3"></textarea>
                             <br>
                             <button type="submit" class="btn btn-info float-right">Send</button>
                             </form>
@@ -84,7 +84,7 @@
                             {% if messages.0.ticket.created_by == request.user.email %}
                             <form method="POST">
                             {% csrf_token %}
-                             <textarea class="form-control" placeholder="write a message ..." rows="3"></textarea>
+                             <textarea class="form-control"  name='message' placeholder="write a message ..." rows="3"></textarea>
                             <br>
                             <button type="submit" class="btn btn-info float-right">Send</button>
                             </form>

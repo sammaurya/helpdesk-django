@@ -5,11 +5,8 @@ from .admin import  AddUserForm, UpdateUserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-
-def support(request):
-    pass
 
 def signup_view(request):
     if request.method == 'POST':
@@ -36,6 +33,7 @@ def login_view(request):
     else:
         return render(request, 'registration/login.html', {})
 
+@login_required(login_url='/user/login/')
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('login'))

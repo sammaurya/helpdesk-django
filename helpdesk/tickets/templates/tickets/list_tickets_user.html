@@ -29,8 +29,8 @@
                    {% endif %}
                    {% if ticket.status == 3 %}
                         <h6 class="btn btn-success">Resolved</h6>
-                   <a href="{% url 'ticket_close' ticket.id %}"><h6 class="btn btn-danger">Close</h6></a>
                    {% endif %}
+                   <a href="{% url 'ticket_close' ticket.id %}"><h6 class="btn btn-danger">Close</h6></a>
                </div>
            </div>
         </div>
