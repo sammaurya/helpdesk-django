@@ -1,0 +1,75 @@
+
+{% extends 'base.html' %}
+
+{% block 'title' %}Sign Up{% endblock 'title' %}
+
+{% block 'head' %}
+
+     <div class="container text-center">
+            <h1 class="mt-5 font-weight-light">HelpDesk Support Portal</h1>
+            <p class="lead">An intractive and easy helpdesk support portal for corporate world</p>
+     </div>
+
+{% endblock 'head' %}
+
+{% block 'content' %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-1">
+          <div class="card-img-left d-none d-md-flex">
+             <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">Register</h5>
+            <form class="form-signin" method="POST">
+                {% csrf_token %}
+              <div class="form-label-group">
+                <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required autofocus>
+                <label for="first_name">First Name</label>
+              </div>
+
+                <div class="form-label-group">
+                <input type="text"  name="last_name" id="last_name" class="form-control" placeholder="Last Name"  autofocus>
+                <label for="last_name">Last Name</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required>
+                <label for="email">Email address</label>
+              </div>
+
+                <div class="form-label-group">
+                  <select id="department" name="department" class="browser-default custom-select" required>
+                      <option selected>Select Department</option>
+                      <option value="1">IT</option>
+                      <option value="2">Admin</option>
+                      <option value="3">HR</option>
+                      <option value="4">Maintenance</option>
+                  </select>
+                </div>
+              <hr>
+
+              <div class="form-label-group">
+                <input type="password" name="password1"  id="password1" class="form-control" placeholder="Password" required>
+                <label for="password1">Password</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" name="password2" id="password2" class="form-control" placeholder="Password" required>
+                <label for="password2">Confirm password</label>
+              </div>
+
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+              <a class="d-block text-center mt-2 small" href="{% url 'login' %}">Sign In</a>
+              <hr class="my-4">
+              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock 'content' %}

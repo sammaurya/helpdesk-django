@@ -1,0 +1,52 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 'title' %}Log In{% endblock 'title' %}
+
+{% block 'head' %}
+
+     <div class="container text-center">
+            <h1 class="mt-5 font-weight-light">HelpDesk Support Portal</h1>
+            <p class="lead">An intractive and easy helpdesk support portal for corporate world</p>
+     </div>
+
+{% endblock 'head' %}
+
+
+{% block 'content' %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+             <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin" method="POST">
+              {% csrf_token %}
+              <div class="form-label-group">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
+                <label for="email">Email address</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                <label for="password">Password</label>
+              </div>
+
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign In</button>
+              <a class="d-block text-center mt-2 small" href="{% url 'signup' %}">Register</a>
+              <hr class="my-4">
+              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign In with Google</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock 'content' %}

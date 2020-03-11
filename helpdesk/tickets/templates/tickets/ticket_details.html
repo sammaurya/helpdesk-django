@@ -1,0 +1,103 @@
+
+
+{% extends 'base.html' %}
+
+{% block 'title' %}Ticket Detail{% endblock 'title' %}
+
+{% block 'content' %}
+
+  <div class="container my-5">
+
+      <div class="row bootstrap snippets">
+          <div class="col-md-6 col-md-offset-2 col-sm-12">
+              <div class="comment-wrapper">
+                  <div class="panel panel-info">
+                      <div class="panel-heading">Ticket Details</div>
+                      <div class="panel-body">
+                          <hr>
+                          <div class="subject">
+                              <strong>Ticket Id : #{{ messages.0.ticket.id }}</strong> <br>
+                              <small>Created by : {{ messages.0.ticket.created_by }}</small><br>
+                              <small>Created on {{ messages.0.ticket.created_on.date }} at {{ messages.0.ticket.created_on.time }}</small>
+                              <br><hr>
+                              <strong>Subject:</strong>
+                              <p class="ml-4">{{ messages.0.ticket.subject }}</p><hr>
+                              <strong>Description:</strong>
+                              <p class="ml-4">{{ messages.0.ticket.description }}</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Messages
+                    </div>
+                    <div class="panel-body">
+                        <hr>
+                        <ul class="media-list">
+                            {% for msg in messages %}
+                            {% if msg.published_by == 'user' %}
+                            <li class="media">
+                                <a href="#" class="float-left">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="rounded-circle">
+                                </a>
+                                <div class="media-body pl-2">
+                                    <span class="text-muted float-right">
+                                        <small class="text-muted">{{ msg.published_at }}</small>
+                                    </span>
+                                    <strong class="text-success">@{{ msg.ticket.created_by }}</strong>
+                                    <p>
+                                       {{ msg.message }}
+                                    </p>
+                                </div>
+                            </li>
+                            {% else %}
+                            <li class="media">
+                                <a href="#" class="float-left">
+                                    <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="rounded-circle">
+                                </a>
+                                <div class="media-body pl-2">
+                                    <span class="text-muted float-right">
+                                        <small class="text-muted">{{ msg.published_at }}</small>
+                                    </span>
+                                    <strong class="text-success">@{{ msg.ticket.accepted_by }}</strong>
+                                    <p>
+                                       {{ msg.message }}
+                                    </p>
+                                </div>
+                            </li>
+                            {% endif %}
+                         {% endfor %}
+                        </ul>
+                        {% if request.user.is_authenticated %}
+                            {% if messages.0.ticket.accepted_by == request.user.email %}
+                            <form method="POST">
+                            {% csrf_token %}
+                             <textarea class="form-control" placeholder="write a message ..." rows="3"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-info float-right">Send</button>
+                            </form>
+                             {% endif %}
+                            {% if messages.0.ticket.created_by == request.user.email %}
+                            <form method="POST">
+                            {% csrf_token %}
+                             <textarea class="form-control" placeholder="write a message ..." rows="3"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-info float-right">Send</button>
+                            </form>
+                            {% endif %}
+                        {% endif %}
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+  </div>
+
+{% endblock 'content' %}
