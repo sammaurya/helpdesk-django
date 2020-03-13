@@ -1,7 +1,6 @@
 
-
 {% extends 'base.html' %}
-
+{% load humanize %}
 {% block 'title' %}Ticket Detail{% endblock 'title' %}
 
 {% block 'content' %}
@@ -16,14 +15,14 @@
                       <div class="panel-body">
                           <hr>
                           <div class="subject">
-                              <strong>Ticket Id : #{{ messages.0.ticket.id }}</strong> <br>
+                              <strong>Ticket Id : #{{ ticket_msgs.0.ticket.id }}</strong> <br>
                               <small>Created by : {{ created_by.get_full_name }}</small><br>
-                              <small>Created on {{ messages.0.ticket.created_on.date }} at {{ messages.0.ticket.created_on.time }}</small>
+                              <small>Created on {{ ticket_msgs.0.ticket.created_on.date }} at {{ ticket_msgs.0.ticket.created_on.time }}</small>
                               <br><hr>
                               <strong>Subject:</strong>
-                              <p class="ml-4">{{ messages.0.ticket.subject }}</p><hr>
+                              <p class="ml-4">{{ ticket_msgs.0.ticket.subject }}</p><hr>
                               <strong>Description:</strong>
-                              <p class="ml-4">{{ messages.0.ticket.description }}</p>
+                              <p class="ml-4">{{ ticket_msgs.0.ticket.description }}</p>
                           </div>
                       </div>
                   </div>
@@ -38,7 +37,7 @@
                     <div class="panel-body">
                         <hr>
                         <ul class="media-list">
-                            {% for msg in messages %}
+                            {% for msg in ticket_msgs %}
                             {% if msg.published_by == 'user' %}
                             <li class="media">
                                 <a href="#" class="float-left">
@@ -46,7 +45,7 @@
                                 </a>
                                 <div class="media-body pl-2">
                                     <span class="text-muted float-right">
-                                        <small class="text-muted">{{ msg.published_at }}</small>
+                                        <small class="text-muted">{{ msg.published_at|naturaltime }}</small>
                                     </span>
                                     <strong class="text-success">{{ created_by.get_full_name }}</strong>
                                     <p>
@@ -61,7 +60,7 @@
                                 </a>
                                 <div class="media-body pl-2">
                                     <span class="text-muted float-right">
-                                        <small class="text-muted">{{ msg.published_at }}</small>
+                                        <small class="text-muted">{{ msg.published_at|naturaltime }}</small>
                                     </span>
                                     <strong class="text-success">{{ accepted_by.get_full_name }}</strong>
                                     <p>
@@ -73,18 +72,18 @@
                          {% endfor %}
                         </ul>
                         {% if request.user.is_authenticated %}
-                            {% if messages.0.ticket.accepted_by == request.user.email %}
+                            {% if ticket_msgs.0.ticket.accepted_by == request.user.email %}
                             <form method="POST">
                             {% csrf_token %}
-                             <textarea class="form-control" name='message' placeholder="write a message ..." rows="3"></textarea>
+                             <textarea class="form-control" name='message' placeholder="write a message ..." rows="3" required></textarea>
                             <br>
                             <button type="submit" class="btn btn-info float-right">Send</button>
                             </form>
                              {% endif %}
-                            {% if messages.0.ticket.created_by == request.user.email %}
+                            {% if ticket_msgs.0.ticket.created_by == request.user.email %}
                             <form method="POST">
                             {% csrf_token %}
-                             <textarea class="form-control"  name='message' placeholder="write a message ..." rows="3"></textarea>
+                             <textarea class="form-control"  name='message' placeholder="write a message ..." rows="3" required></textarea>
                             <br>
                             <button type="submit" class="btn btn-info float-right">Send</button>
                             </form>

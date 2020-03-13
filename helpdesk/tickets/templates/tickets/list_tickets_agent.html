@@ -8,6 +8,15 @@
 {% block 'content' %}
 
   <div class="container my-5">
+
+       {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-info">
+                {{ message }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
       <a href="{% url 'list_tickets' %}?status={{ 'all' }}" class="btn btn-secondary">All</a>
       <a href="{% url 'list_tickets' %}?status={{ 'unassigned' }}" type="button" class="btn btn-secondary">Unassigned</a>
       <a href="{% url 'list_tickets' %}?status={{ 'pending' }}" type="button" class="btn btn-secondary">Pending</a>
@@ -23,16 +32,16 @@
                </div>
                <div class="ticket_right">
                    {% if ticket.status == 1 %}
-                            <a class="btn btn-secondary" style="color:white">Unassigned</a>
+                            <a class="btn btn-secondary disabled" style="color:white">Unassigned</a>
                             <a href="{% url 'accept_ticket' ticket.id %}" class="btn btn-success">Accept</a>
                    {% endif %}
                    {% if ticket.accepted_by == request.user.email %}
                        {% if ticket.status == 2 %}
-                            <a class="btn btn-warning">Pending</a>
+                            <a class="btn btn-warning disabled">Pending</a>
                             <a href="{% url 'ticket_resolved' ticket.id %}"  class="btn btn-success">Resolved</a>
                        {% endif %}
                        {% if ticket.status == 3 %}
-                            <h6 class="btn btn-success">Resolved</h6>
+                            <h6 class="btn btn-success disabled">Resolved</h6>
                        {% endif %}
                    {% endif %}
                </div>

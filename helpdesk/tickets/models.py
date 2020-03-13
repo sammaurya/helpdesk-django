@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
@@ -38,18 +37,19 @@ class Ticket(models.Model):
         (Maintenance, _('Maintenance')),
     )
 
-    subject = models.CharField(null=False, max_length=100)
-    description = models.TextField(max_length=250)
-    department = models.IntegerField(choices=DEPARTMENT_CHOICES)
-    seat_no = models.CharField(max_length=10)
-    created_on = models.DateTimeField(default=now)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=UNASSIGNED_STATUS)
-    priority = models.IntegerField(choices=PRIORITY_CHOICES)
-    created_by = models.EmailField(null=False)
-    accepted_by = models.EmailField(null=True,)
+    subject = models.CharField(null=False, max_length=100, verbose_name='Subject')
+    description = models.TextField(max_length=250, verbose_name='Description')
+    department = models.IntegerField(choices=DEPARTMENT_CHOICES, null=False, blank=False, verbose_name='Department')
+    seat_no = models.CharField(max_length=10, verbose_name='Seat No')
+    created_on = models.DateTimeField(auto_now=True, verbose_name='Created On')
+    status = models.IntegerField(choices=STATUS_CHOICES, default=UNASSIGNED_STATUS, verbose_name='Status')
+    priority = models.IntegerField(choices=PRIORITY_CHOICES, null=False, blank=False, verbose_name='Priority')
+    created_by = models.EmailField(null=False, verbose_name='Created By')
+    accepted_by = models.EmailField(null=True, verbose_name='Accepted By')
 
     class Meta:
         ordering = ('created_on',)
+
     def __str__(self):
         return str(self.subject)
 
@@ -57,6 +57,11 @@ class Ticket(models.Model):
 
 class Message(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
-    message = models.TextField(max_length=150, null=False, blank=False)
-    published_by = models.CharField(default='user', max_length=5)
-    published_at = models.DateTimeField(default=now)
+    message = models.TextField(max_length=150, null=False, blank=False, verbose_name='Message')
+    published_by = models.CharField(default='user', max_length=5, verbose_name='Published By')
+    published_at = models.DateTimeField(auto_now=True, verbose_name='Published At' )
+
+
+
+    def __str__(self):
+        return str(self.message)

@@ -1,10 +1,7 @@
 from django.shortcuts import render, reverse, redirect
-from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
-from .admin import  AddUserForm, UpdateUserForm
-from django.contrib.auth.decorators import login_required
+from .admin import  AddUserForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
